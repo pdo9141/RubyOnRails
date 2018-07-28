@@ -1,8 +1,11 @@
 MyBlog::Application.routes.draw do
-  resources :blog_posts
-
+  #resources :blog_posts
+  #resources :blogposts, :controller => "blog_posts"
+  resources :blog_posts, :path => "blogposts"
 
   get "home/index"
+  get "home/newaction" => "blog_posts#index"
+  get ":title/p/:id" => "blog_posts#show", :id => /[0-9]+/
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

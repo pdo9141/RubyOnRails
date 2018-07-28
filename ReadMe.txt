@@ -1,4 +1,5 @@
 Install Ruby on Rails
+00) To run Ruby code: ruby *.rb
 01) Navigate to https://www.ruby-lang.org/en/, in windows go to https://rubyinstaller.org/
 02) Download recommended version with DEVKIT (some gems might require it)
 	If devkit installed seperately, ruby dk.rb init, ruby dk.rb install
@@ -245,11 +246,34 @@ Install Ruby on Rails
 	rake db:rollback (rolls back last migration)
 28) Remove all gems: ruby -e "`gem list`.split(/$/).each { |line| puts `gem uninstall -Iax #{line.split(' ')[0]}` unless line.empty? }"	
 29) To debug: "gem install byebug", to into Gemfile and add "gem 'byebug'", in your code add byebug instead of debugger
-
-
-
-
-
+30) Controller routes are defined in config/routes.rb
+31) To access user data (querystring, URL segments, POST data) use the params[], there's also session[]
+	Rails uses cookie (4k max) for session by default, you can choose cookie, ActiveRecord, or Cache stores
+	Tweak by going into config/initializers/session_store.rb
+32) Here's how to work with cookies:
+	cookies[:remember_me] = true
+	remember_me = cookies[:remember_me]
+	cookies.delete :remember_me
+	cookies[:login] = {
+		:value => 'johndoe555',
+		:path => '/',
+		:domain => 'localhost',
+		:expires => Time.now + 3600,
+		:secure => true,
+		:httponly => false
+	}	
+33) Rails has similar master page and partial views. Use <%= yield :header %> in master and <% content_for :header do %>my content<% end %> in view
+	<% if content_for? :header %>
+		<%= yield :header %>
+	<% else %>
+		<p>Default for header here</p>
+	<% end %>
+34) You can create controller specific layout which will override application.html.erb, e.g., blog_posts.html.erb
+35) You can pass in additional attributes to partials: <%= render 'form', :readonly => true %>
+	<%= f.text_field :content, :disabled => readonly ||= false %>
+36) Rails minifies and bundles by default, manage the Asset pipeline in config/applicaton.rb (config.assets.enabled = true)
+37) ActiveRecord is Rails' default ORM, it's an implementation of ActiveRecord pattern (models carry both data and behavior)
+	Model attributes are infered from the table definition
 
 
 
