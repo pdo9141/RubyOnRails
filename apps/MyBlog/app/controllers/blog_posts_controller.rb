@@ -14,6 +14,7 @@ class BlogPostsController < ApplicationController
   # GET /blog_posts/1.json
   def show
     @blog_post = BlogPost.find(params[:id])
+    byebug
 
     respond_to do |format|
       format.html # show.html.erb

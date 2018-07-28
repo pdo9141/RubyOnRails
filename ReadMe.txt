@@ -244,6 +244,7 @@ Install Ruby on Rails
 	rails generate migration AddIsPublishedToBlogPost
 	rake db:rollback (rolls back last migration)
 28) Remove all gems: ruby -e "`gem list`.split(/$/).each { |line| puts `gem uninstall -Iax #{line.split(' ')[0]}` unless line.empty? }"	
+29) To debug: "gem install byebug", to into Gemfile and add "gem 'byebug'", in your code add byebug instead of debugger
 
 
 
