@@ -1,6 +1,7 @@
 Install Ruby on Rails
 01) Navigate to https://www.ruby-lang.org/en/, in windows go to https://rubyinstaller.org/
 02) Download recommended version with DEVKIT (some gems might require it)
+	If devkit installed seperately, ruby dk.rb init, ruby dk.rb install
 03) Once installed, RubyInstaller for windows will ask you to install MSYS2 items (just install all)
 04) To test installation, go to cmd and type "ruby -v"
 05) To test Ruby, use IRB which is a Ruby REPL (Read-Eval-Print loop), from cmd type "irb". You can also use start menu, find Interactive Ruby
@@ -217,7 +218,32 @@ Install Ruby on Rails
 	ensure
 		puts "This always runs, like finally"
 	end
-
+22) Install Rails (MVC framework for Ruby) using RubyGems.org (like Nuget), big difference is gems installed once to system not per solution/project	
+	Open cmd, type "gem install rails"
+	Due to SQL Server adapter issue, "gem uninstall rails" > "gem install rails -v 3.2.12"
+	In cmd, create folder, type "md C:\Users\Phillip\Source\Repos\RubyOnRails\apps"
+	In cmd, navigate to folder, type "rails new MyBlog"
+23) Start built-in Rails web server (WEBrick > Puma now), in cmd, navigate to MyBlog, type "rails server". To stop server, ctrl + c
+	By default, it runs under port 3000, to change that type "rails server -p 80"
+24) To ask Rails to create controller for us type "rails generate controller home index". Go to http://localhost:3000/home/index	
+	To make home/index our root, delete index.html file in public folder then edit the route file in config/routes.rb, add "root :to => 'home#index'"
+25) Rails has good scaffolding:
+	a) Build model: rails generate scaffold BlogPost title:string content:string publishdate:datetime	
+	b) Destroy model: rails destroy scaffold BlogPost
+26) To work with SQL Server install the TinyTDS gem, type "gem install tiny_tds", then type "gem install activerecord-sqlserver-adapter"
+	Due to adapter issue with new Rails, "gem install activerecord-sqlserver-adapter -v 3.2.10"
+	Now open Gemfile in the root of our application, remove "gem sqlite3"
+	Add "gem 'tiny_tds'" and "gem 'activerecord-sqlserver-adapter'"
+	Now configure connection string, open database.yml in config folder, change adapter to sqlserver, database to MyBlog,
+	add dataserver: 'WayTooGonzo', username: sa, password: '1234' or omit password and username: WAYTOOGONZO\Phillip
+	Turn on SQL Server Browser service
+27) Migrations: manage the evolution of database schema, to execute use rake commands
+	rake --tasks
+	rake db:migrate (will look into database.yml and execute), use "--trace" flag for verbose details 
+	rails generate migration AddColumnToBlogPost ispublished:boolean
+	rails generate migration AddIsPublishedToBlogPost
+	rake db:rollback (rolls back last migration)
+28) Remove all gems: ruby -e "`gem list`.split(/$/).each { |line| puts `gem uninstall -Iax #{line.split(' ')[0]}` unless line.empty? }"	
 
 
 
