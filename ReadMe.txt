@@ -1,6 +1,8 @@
 Install Ruby on Rails
 00) To run Ruby code: ruby *.rb
 01) Navigate to https://www.ruby-lang.org/en/, in windows go to https://rubyinstaller.org/
+	I installed rubyinstaller-2.2.6-x64.exe and DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe
+	ruby 2.2.6p396, Rails 3.2.12, tiny_tds 2.1.2, activerecord-sqlserver-adapter (3.2.18, 3.2.10)
 02) Download recommended version with DEVKIT (some gems might require it)
 	If devkit installed seperately, ruby dk.rb init, ruby dk.rb install
 03) Once installed, RubyInstaller for windows will ask you to install MSYS2 items (just install all)
@@ -274,10 +276,11 @@ Install Ruby on Rails
 36) Rails minifies and bundles by default, manage the Asset pipeline in config/applicaton.rb (config.assets.enabled = true)
 37) ActiveRecord is Rails' default ORM, it's an implementation of ActiveRecord pattern (models carry both data and behavior)
 	Model attributes are infered from the table definition
-
-
-
-
+38) You can use devise gem if authentication needed: "gem install devise", after install add to Gemfile, "gem 'devise'"
+	Install it: "rails generate devise:install", "rails generate devise:views", "rails generate devise user"
+	Run migration to set up users table: "rake db:migrate"
+39) To look up routes: "rake routes"
+40) Create comments feature: "rails generate model comment blog_post_id:integer email:string comment:string", "rake db:migrate"
 
 
 

@@ -4,10 +4,28 @@ class BlogPostsController < ApplicationController
   def index
     @blog_posts = BlogPost.all
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @blog_posts }
+    if user_signed_in?
+      render
+    else
+      render 'home/index'
     end
+
+    render
+    
+    # respond_to do |format|
+    #   format.html # index.html.erb
+    #   format.json { render json: @blog_posts }
+    # end
+  end
+
+  #POST /comment
+  def comment
+    @comment = Comment.new(params[:comment])
+    if !@comment.save
+      flash[:comment_errors] = @comment.errors.full_messages
+    end
+
+    redirect_to blog_post_path(@comment.blog_post_id)
   end
 
   # GET /blog_posts/1
@@ -25,6 +43,8 @@ class BlogPostsController < ApplicationController
   # GET /blog_posts/new
   # GET /blog_posts/new.json
   def new
+    authenticate_user!
+
     @blog_post = BlogPost.new
 
     respond_to do |format|
@@ -35,6 +55,8 @@ class BlogPostsController < ApplicationController
 
   # GET /blog_posts/1/edit
   def edit
+    authenticate_user!
+
     @blog_post = BlogPost.find(params[:id])
   end
 

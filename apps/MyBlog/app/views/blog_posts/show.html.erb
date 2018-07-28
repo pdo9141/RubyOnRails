@@ -12,9 +12,39 @@
 
 <p>
   <b>Publishdate:</b>
-  <%= @blog_post.publishdate %>
+  # <%= @blog_post.publishdate %>
+  <%= @blog_post.publishdate.strftime("%Y-%m-%d %I:%M") %>
 </p>
 
+<% unless flash[:comment_errors].nil?
+  errs = flash[:comment_errors]
+%>
+  <div id="error_explanation">
+    <h2><%= pluralize(errs.count, "error") %> prohibited your comment from being saved</h2>
+    <ul>
+      <% errs.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
 
-<%= link_to 'Edit', edit_blog_post_path(@blog_post) %> |
+<%= form_tag('comment') do %>
+  <%= label_tag 'Email:' %><br />
+  <%= text_field_tag 'comment[email]', '' %><br />
+  <%= label_tag 'Comment:' %><br />
+  <%= text_area_tag 'comment[comment]', '' %><br />
+  <%= hidden_field_tag 'comment[blog_post_id]', @blog_post.id %>
+  <%= submit_tag 'Send' %>
+<% end %>
+
+<h3>Comments</h3>
+<% @blog_post.comments.each do |c| %>
+  <p>
+    <%= c.created_at.strftime("%Y-%m-%d %I:%M") %><br />
+    <%= c.comment %>
+  </p>
+<% end %>
+
+<%= link_to 'Edit', edit_blog_post_path(@blog_post) if user_signed_in? %> |
 <%= link_to 'Back', blog_posts_path %>
