@@ -1,5 +1,6 @@
 Install Ruby on Rails
 00) To run Ruby code: ruby *.rb
+    gem install bundler
 01) Navigate to https://www.ruby-lang.org/en/, in windows go to https://rubyinstaller.org/
 	I installed rubyinstaller-2.2.6-x64.exe and DevKit-mingw64-64-4.7.2-20130224-1432-sfx.exe
 	ruby 2.2.6p396, Rails 3.2.12, tiny_tds 2.1.2, activerecord-sqlserver-adapter (3.2.18, 3.2.10)
